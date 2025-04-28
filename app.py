@@ -2,7 +2,7 @@ import streamlit as st
 from openai import OpenAI
 
 # --- Initialize OpenAI Client ---
-client = OpenAI(api_key=st.secrets["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"])
+client = OpenAI(api_key=st.secrets["openai_api_key"])
 
 # --- Email Writing Function ---
 def write_email(user_prompt, tone="Formal"):
