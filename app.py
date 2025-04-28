@@ -1,14 +1,14 @@
-import openai
 import streamlit as st
+from openai import OpenAI
 
-# --- Configuration ---
-openai.api_key = "YOUR-OPENAI-KEY"  # Replace with your OpenAI API key
+# --- Initialize OpenAI Client ---
+client = OpenAI()
 
 # --- Email Writing Function ---
 def write_email(user_prompt, tone="Formal"):
     system_prompt = f"You are a professional email writer. Write a complete {tone.lower()} email based on the user's instruction. Always use correct grammar and a clear structure."
-    
-    response = openai.ChatCompletion.create(
+
+    response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
             {"role": "system", "content": system_prompt},
@@ -17,7 +17,7 @@ def write_email(user_prompt, tone="Formal"):
         temperature=0.7,
         max_tokens=600
     )
-    email_text = response['choices'][0]['message']['content']
+    email_text = response.choices[0].message.content
     return email_text
 
 # --- Streamlit Web App ---
@@ -37,4 +37,4 @@ if st.button("Generate Email"):
             st.subheader("Generated Email")
             st.text_area("Email Output", value=email, height=300)
 
-st.caption("\u00a9 2025 Your Email AI Agent")
+st.caption("© 2025 Your Email AI Agent")
